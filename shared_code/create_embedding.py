@@ -1,16 +1,22 @@
 from openai import AzureOpenAI
 from rapidfuzz import fuzz
 import numpy as np
+import os
 
+
+API_KEY=os.environ.get("api_key")
+API_VERSION=os.environ.get("api_version")
+AZURE_ENDPOINT=os.environ.get("azure_endpoint")
+MODEL=os.environ.get("model")
 
 client = AzureOpenAI(
-    api_key="c46e23bb620d4b1cb1af0cfa070d31a4",
-    api_version="2024-02-01",
-    azure_endpoint="https://wts-opensearch-gpt.openai.azure.com/",
+    api_key=API_KEY,
+    api_version=API_VERSION,
+    azure_endpoint=AZURE_ENDPOINT
 )
 
 
-def generate_embeddings(text, model="embedding"):  # model = "deployment_name"
+def generate_embeddings(text, model=MODEL):  # model = "deployment_name"
     embed = client.embeddings.create(input=text, model=model).data[0].embedding
     return embed
 
